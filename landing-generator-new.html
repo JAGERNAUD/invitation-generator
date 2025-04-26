@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Հրավիրատոմսի Գեներատոր</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f8f8f8;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #555;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .button {
+      margin-top: 20px;
+      padding: 12px;
+      background: #865cda;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #6e42c1;
+    }
+    .invitation {
+      display: none;
+      margin-top: 30px;
+      animation: fadeIn 2s ease;
+    }
+    .hero {
+      background-size: cover;
+      background-position: center;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+      font-size: 30px;
+      text-align: center;
+    }
+    .section {
+      background: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Գեներատոր Օնլայն Հրավիրատոմսերի</h1>
+
+  <label>Ընտրեք ոճ</label>
+  <select id="style">
+    <option value="premium">Պրեմիում</option>
+    <option value="minimal">Մինիմալիստական</option>
+    <option value="floral">Ծաղկային</option>
+  </select>
+
+  <label>Մուտքագրեք Փեսայի անուն</label>
+  <input id="groom" type="text" placeholder="Օրինակ՝ Արամ">
+
+  <label>Մուտքագրեք Հարսի անուն</label>
+  <input id="bride" type="text" placeholder="Օրինակ՝ Սիրանուշ">
+
+  <label>Միջոցառման ամսաթիվ</label>
+  <input id="date" type="text" placeholder="Օրինակ՝ 2025-07-12">
+
+  <label>Եկեղեցու անուն</label>
+  <input id="church" type="text" placeholder="Օրինակ՝ Սուրբ Հովհաննես">
+
+  <label>Եկեղեցու հասցե</label>
+  <input id="churchAddress" type="text" placeholder="Օրինակ՝ Արագածոտն">
+
+  <label>Ռեստորանի անուն</label>
+  <input id="restaurant" type="text" placeholder="Օրինակ՝ Մորենա">
+
+  <label>Լուսանկարի հղում (Ֆոն)</label>
+  <input id="photoUrl" type="text" placeholder="Լուսանկարի հղումը">
+
+  <button class="button" onclick="generateInvitation()">Ստեղծել հրավիրատոմս</button>
+</div>
+
+<div id="invitation" class="invitation"></div>
+
+<script>
+function generateInvitation() {
+  const style = document.getElementById('style').value;
+  const groom = document.getElementById('groom').value;
+  const bride = document.getElementById('bride').value;
+  const date = document.getElementById('date').value;
+  const church = document.getElementById('church').value;
+  const churchAddress = document.getElementById('churchAddress').value;
+  const restaurant = document.getElementById('restaurant').value;
+  const photoUrl = document.getElementById('photoUrl').value;
+
+  let backgroundColor = "#222";
+  if (style === "premium") backgroundColor = "linear-gradient(#1e1e1e, #865cda)";
+  else if (style === "minimal") backgroundColor = "#ffffff";
+  else if (style === "floral") backgroundColor = "url('https://images.unsplash.com/photo-1524843861284-5bff6f8ae3c2?fit=crop&w=900&q=80')";
+
+  const html = `
+    <div class="hero" style="background: ${photoUrl ? "url('" + photoUrl + "')" : backgroundColor}; background-size: cover;">
+      <div>${groom} & ${bride}</div>
+      <div>${date}</div>
+    </div>
+    <div class="section">
+      <h2>Եկեղեցի</h2>
+      <p>${church}</p>
+      <p>${churchAddress}</p>
+    </div>
+    <div class="section">
+      <h2>Ռեստորան</h2>
+      <p>${restaurant}</p>
+    </div>
+    <div class="section">
+      <p>Սիրով սպասում ենք Ձեզ մեր տոնին։</p>
+    </div>
+  `;
+
+  document.getElementById('invitation').innerHTML = html;
+  document.getElementById('invitation').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
