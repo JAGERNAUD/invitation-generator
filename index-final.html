@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Գեներատոր հրավիրատոմսերի</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #555;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    select, input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .button {
+      margin-top: 20px;
+      background-color: #865cda;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .button:hover {
+      background-color: #6e42c1;
+    }
+    .conditional {
+      display: none;
+    }
+    .output {
+      margin-top: 40px;
+      padding: 20px;
+      background: #e8eaf6;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Գեներատոր Օնլայն Հրավիրատոմսերի</h1>
+
+    <label for="eventType">Ընտրեք թեմատիկա</label>
+    <select id="eventType" onchange="updateFields()">
+      <option value="wedding">Հարսանիք</option>
+      <option value="engagement">Նշանադրություն</option>
+      <option value="baptism">Մկրտություն</option>
+      <option value="birthday">Ծննդյան օր</option>
+      <option value="corporate">Կորպորատիվ</option>
+      <option value="other">Այլ</option>
+    </select>
+
+    <label for="style">Ընտրեք ոճ</label>
+    <select id="style">
+      <option value="premium">Պրեմիում</option>
+      <option value="minimal">Մինիմալիստական</option>
+      <option value="floral">Ծաղկային</option>
+      <option value="natural">Բնական</option>
+      <option value="kids">Մանկական</option>
+      <option value="classic">Դասական</option>
+    </select>
+
+    <label for="timer">Ցուցադրել ժամանակահատվածի հաշվիչ?</label>
+    <select id="timer">
+      <option value="yes">Այո</option>
+      <option value="no">Ոչ</option>
+    </select>
+
+    <label for="map">Ցուցադրել քարտեզ?</label>
+    <select id="map">
+      <option value="yes">Այո</option>
+      <option value="no">Ոչ</option>
+    </select>
+
+    <div id="coupleFields" class="conditional">
+      <label for="groomName">Փեսայի անուն</label>
+      <input type="text" id="groomName" placeholder="Օրինակ՝ Արամ">
+      <label for="brideName">Հարսի անուն</label>
+      <input type="text" id="brideName" placeholder="Օրինակ՝ Սիրանուշ">
+    </div>
+
+    <div id="singleNameField" class="conditional">
+      <label for="personName">Անուն</label>
+      <input type="text" id="personName" placeholder="Օրինակ՝ Դավիթ կամ Կարինե">
+    </div>
+
+    <label for="date">Մուտքագրեք ամսաթիվ և ժամ</label>
+    <input type="text" id="date" placeholder="Օրինակ՝ 2025-07-12 · 15:00">
+
+    <div id="churchFields" class="conditional">
+      <label for="churchName">Եկեղեցու անուն</label>
+      <input type="text" id="churchName" placeholder="Օրինակ՝ Սուրբ Հովհաննես">
+      <label for="churchAddress">Եկեղեցու հասցե</label>
+      <input type="text" id="churchAddress" placeholder="Օրինակ՝ Արագածոտնի մարզ, Օհանավան">
+    </div>
+
+    <div id="restaurantFields" class="conditional">
+      <label for="restaurantName">Ռեստորանի անուն</label>
+      <input type="text" id="restaurantName" placeholder="Օրինակ՝ Մորենա">
+      <label for="restaurantAddress">Ռեստորանի հասցե</label>
+      <input type="text" id="restaurantAddress" placeholder="Օրինակ՝ ք. Մասիս, Մ. Հերացու 7/8">
+    </div>
+
+    <button class="button" onclick="generateInvitation()">Ստեղծել հրավիրատոմս</button>
+
+    <div id="output" class="output" style="display:none;"></div>
+  </div>
+
+<script>
+function updateFields() {
+  const eventType = document.getElementById("eventType").value;
+  const coupleFields = document.getElementById("coupleFields");
+  const singleNameField = document.getElementById("singleNameField");
+  const churchFields = document.getElementById("churchFields");
+  const restaurantFields = document.getElementById("restaurantFields");
+
+  coupleFields.style.display = "none";
+  singleNameField.style.display = "none";
+  churchFields.style.display = "none";
+  restaurantFields.style.display = "none";
+
+  if (eventType === "wedding" || eventType === "engagement") {
+    coupleFields.style.display = "block";
+    churchFields.style.display = "block";
+    restaurantFields.style.display = "block";
+  } else if (eventType === "baptism") {
+    singleNameField.style.display = "block";
+    churchFields.style.display = "block";
+    restaurantFields.style.display = "block";
+  } else if (eventType === "birthday" || eventType === "corporate") {
+    singleNameField.style.display = "block";
+    restaurantFields.style.display = "block";
+  } else {
+    singleNameField.style.display = "block";
+  }
+}
+
+function generateInvitation() {
+  const eventType = document.getElementById('eventType').value;
+  const groomName = document.getElementById('groomName').value;
+  const brideName = document.getElementById('brideName').value;
+  const personName = document.getElementById('personName').value;
+  const date = document.getElementById('date').value;
+  const churchName = document.getElementById('churchName').value;
+  const churchAddress = document.getElementById('churchAddress').value;
+  const restaurantName = document.getElementById('restaurantName').value;
+  const restaurantAddress = document.getElementById('restaurantAddress').value;
+
+  let html = "<h2>Հրավիրատոմս</h2><p><strong>Միջոցառման տեսակ:</strong> " + document.getElementById('eventType').selectedOptions[0].text + "</p>";
+
+  if (eventType === "wedding" || eventType === "engagement") {
+    html += "<p><strong>Փեսա:</strong> " + groomName + "</p>";
+    html += "<p><strong>Հարս:</strong> " + brideName + "</p>";
+  } else {
+    html += "<p><strong>Անուն:</strong> " + personName + "</p>";
+  }
+
+  html += "<p><strong>Ամսաթիվ և Ժամ:</strong> " + date + "</p>";
+
+  if (churchName && churchAddress) {
+    html += "<p><strong>Եկեղեցի:</strong> " + churchName + " (" + churchAddress + ")</p>";
+  }
+
+  if (restaurantName && restaurantAddress) {
+    html += "<p><strong>Ռեստորան:</strong> " + restaurantName + " (" + restaurantAddress + ")</p>";
+  }
+
+  document.getElementById('output').innerHTML = html;
+  document.getElementById('output').style.display = "block";
+}
+
+document.addEventListener("DOMContentLoaded", updateFields);
+</script>
+
+</body>
+</html>
