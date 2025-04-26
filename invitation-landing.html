@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Հրավիրատոմս Գեներատոր</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f8f8f8;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .button {
+      margin-top: 20px;
+      padding: 12px;
+      background: #865cda;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background: #6b44b5;
+    }
+    .invitation {
+      margin-top: 40px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .header {
+      height: 400px;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      text-shadow: 0 0 10px black;
+    }
+    .content {
+      padding: 20px;
+      text-align: center;
+    }
+    .content h2, .content p {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ստեղծեք Ձեր Հրավիրատոմսը</h1>
+
+    <label>Փեսայի անուն</label>
+    <input id="groom" type="text" placeholder="Օրինակ՝ Արամ">
+
+    <label>Հարսի անուն</label>
+    <input id="bride" type="text" placeholder="Օրինակ՝ Սիրանուշ">
+
+    <label>Միջոցառման ամսաթիվ և ժամ</label>
+    <input id="date" type="text" placeholder="Օրինակ՝ 2025-07-20 17:00">
+
+    <label>Եկեղեցու անուն</label>
+    <input id="church" type="text" placeholder="Օրինակ՝ Սուրբ Հովհաննես">
+
+    <label>Եկեղեցու հասցե</label>
+    <input id="churchAddress" type="text" placeholder="Օրինակ՝ Արագածոտն">
+
+    <label>Ռեստորանի անուն</label>
+    <input id="restaurant" type="text" placeholder="Օրինակ՝ Մորենա">
+
+    <label>Ռեստորանի հասցե</label>
+    <input id="restaurantAddress" type="text" placeholder="Օրինակ՝ Մասիս">
+
+    <label>Լուսանկարի հղում</label>
+    <input id="photoUrl" type="text" placeholder="Քո լուսանկարի հղումը">
+
+    <label>Ընտրեք ոճ</label>
+    <select id="theme">
+      <option value="classic">Դասական</option>
+      <option value="premium">Պրեմիում</option>
+      <option value="floral">Ծաղկային</option>
+      <option value="minimal">Մինիմալիստական</option>
+    </select>
+
+    <button class="button" onclick="generateInvitation()">Ստեղծել հրավիրատոմս</button>
+
+    <div id="invitation" class="invitation" style="display:none;"></div>
+  </div>
+
+  <script>
+    function generateInvitation() {
+      const groom = document.getElementById('groom').value;
+      const bride = document.getElementById('bride').value;
+      const date = document.getElementById('date').value;
+      const church = document.getElementById('church').value;
+      const churchAddress = document.getElementById('churchAddress').value;
+      const restaurant = document.getElementById('restaurant').value;
+      const restaurantAddress = document.getElementById('restaurantAddress').value;
+      const photoUrl = document.getElementById('photoUrl').value;
+      const theme = document.getElementById('theme').value;
+
+      const headerStyle = `background-image: url('${photoUrl}'); background-color: rgba(0,0,0,0.5);`;
+
+      const invitationHtml = `
+        <div class="header" style="${headerStyle}">
+          <h1>${groom} & ${bride}</h1>
+          <p>${date}</p>
+        </div>
+        <div class="content">
+          <h2>Եկեղեցի</h2>
+          <p>${church}</p>
+          <p>${churchAddress}</p>
+          <h2>Ռեստորան</h2>
+          <p>${restaurant}</p>
+          <p>${restaurantAddress}</p>
+          <p>Սիրով սպասում ենք Ձեզ մեր տոնին!</p>
+        </div>
+      `;
+
+      const invitationBlock = document.getElementById('invitation');
+      invitationBlock.innerHTML = invitationHtml;
+      invitationBlock.style.display = 'block';
+    }
+    document.addEventListener("DOMContentLoaded", () => {});
+  </script>
+
+</body>
+</html>
